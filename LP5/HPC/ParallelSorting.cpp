@@ -2,6 +2,7 @@
 #include <ctime>
 #include <vector>
 #include <chrono>
+#include <omp.h>
 #include <cstdlib>
 using namespace std;
 
@@ -125,39 +126,39 @@ int main(int argc, char * argv[]){
     vector<int> arr1 = generateRandomArray(TEST_ARR_SIZE);
     vector<int>arr1_copy = arr1;
     cout<<"Executing sequential bubble sort..\n";
-    auto start = chrono::high_resolution_clock::now();
+    double start = omp_get_wtime();
     sequentialBubbleSort(arr1);
-    auto end = chrono::high_resolution_clock::now();
-    chrono::duration<double> bubbleseq = end - start;
+    auto end = omp_get_wtime();
+   
 
     cout<<"Executing Parallel Bubble sort.. \n";
-    auto s1 = chrono:: high_resolution_clock::now();
+    auto s1 = omp_get_wtime();
     parallelBubbleSort(arr1_copy);
-    auto e1 = chrono::high_resolution_clock::now();
-    chrono::duration<double> bubblepar = e1 - s1;
+    auto e1 = omp_get_wtime();
+   
 
     vector<int> arr2 = generateRandomArray(TEST_ARR_SIZE);
     vector<int>arr2_copy = arr2;
     cout<<"Executing sequential merge sort..\n";
-    auto s2 = chrono::high_resolution_clock::now();
+    auto s2 = omp_get_wtime();
     sequentialMergeSort(arr2, 0, arr2.size()-1);
-    auto e2 = chrono::high_resolution_clock::now();
-    chrono::duration<double> mergeseq = e2 - s2;
+    auto e2 = omp_get_wtime();
+   
 
     cout<<"Executing Parallel Merge sort.. \n";
-    auto s3 = chrono:: high_resolution_clock::now();
+    auto s3 = omp_get_wtime();
     parallelMergeSort(arr2_copy, 0 , arr2_copy.size()-1);
-    auto e3 = chrono::high_resolution_clock::now();
-    chrono::duration<double> mergepar = e3 - s3;
+    auto e3 = omp_get_wtime();
+  
     
-    cout<<"Execution time for Sequential Bubble Sort: "<< bubbleseq.count()<<endl;
-    cout<<"Execution time for Parallel Bubble Sort: "<< bubblepar.count()<<endl;
+    cout<<"Execution time for Sequential Bubble Sort: "<< (end - start)* 1000<<"ms"<<endl;
+    cout<<"Execution time for Parallel Bubble Sort: "<< (e1 - s1) * 1000 <<"ms"<<endl;
     cout<<"Parallel Bubble sort is faster than sequential by: "<<
-    bubbleseq.count() - bubblepar.count()<<"seconds"<<endl;
-    cout<<"Execution time for Sequential Merge Sort: "<< mergeseq.count()<<endl;
-    cout<<"Execution time for Parallel Bubble Sort: "<< mergepar.count()<<endl;
+    ((end - start) - (e1-s1))* 1000<<"ms"<<endl;
+    cout<<"Execution time for Sequential Merge Sort: "<< (e2 - s2) * 1000<<"ms"<<endl;
+    cout<<"Execution time for Parallel Bubble Sort: "<< (e3-s3) * 1000 <<"ms"<<endl;
     cout<<"Parallel Merge sort is faster than sequential by: "<<
-    mergeseq.count() - mergepar.count()<<"seconds"<<endl;
+    ((e2 - s2) - (e3-s3)) * 1000<<"ms"<<endl;
     return 0;
 
 }
