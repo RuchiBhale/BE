@@ -156,7 +156,7 @@ int main(int argc, char * argv[]){
     cout<<"Parallel Bubble sort is faster than sequential by: "<<
     ((end - start) - (e1-s1))* 1000<<"ms"<<endl;
     cout<<"Execution time for Sequential Merge Sort: "<< (e2 - s2) * 1000<<"ms"<<endl;
-    cout<<"Execution time for Parallel Bubble Sort: "<< (e3-s3) * 1000 <<"ms"<<endl;
+    cout<<"Execution time for Parallel Merge Sort: "<< (e3-s3) * 1000 <<"ms"<<endl;
     cout<<"Parallel Merge sort is faster than sequential by: "<<
     ((e2 - s2) - (e3-s3)) * 1000<<"ms"<<endl;
     return 0;
